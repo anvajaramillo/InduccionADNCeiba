@@ -34,7 +34,6 @@ pipeline {
             url:'https://github.com/anvajaramillo/InduccionADNCeiba.git'
           ]]
         ])
-        sh 'gradle --b ./build.gradle clean'
         sh 'chmod +x ./gradlew'
         sh './gradlew --b ./build.gradle clean'
       }
