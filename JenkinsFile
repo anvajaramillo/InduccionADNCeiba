@@ -13,7 +13,7 @@ pipeline {
   //Una sección que define las herramientas “preinstaladas” en Jenkins
   tools {
     jdk 'JDK8_Centos' //Preinstalada en la Configuración del Master
-    gradle 'Gradle4.5_Centos' //Preinstalada en la Configuración del Master
+    gradle 'Gradle6.8_Centos' //Preinstalada en la Configuración del Master
   }
 
   //Aquí comienzan los “items” del Pipeline
@@ -30,27 +30,28 @@ pipeline {
           gitTool: 'Default', 
           submoduleCfg: [], 
           userRemoteConfigs: [[
-          credentialsId: 'GitHub_anvajaramillo', 
-          url:'https://github.com/anvajaramillo/InduccionADNCeiba.git'
+            credentialsId: 'GitHub_anvajaramillo', 
+            url:'https://github.com/anvajaramillo/InduccionADNCeiba.git'
           ]]
         ])
+        sh 'chmod +x ./gradlew'
+        sh './gradlew --b ./build.gradle clean'
       }
     }
 
-    stage('Build') {
-      steps {
-        echo "------------>Build<------------"
-        sh 'chmod +x ./gradlew'
-        sh './gradlew build -x test'
-      }
-    }
-    
+    stage('Compile') {
+        steps{
+          echo "------------>CompileW<------------"
+          sh './gradlew build'
+          echo "------------>Compile<------------"
+          sh './gradlew --b ./build.gradle compileJava'
+        }
+    } 
+
     stage('Compile & Unit Tests') {
       steps{
         echo "------------>Unit Tests<------------"
-        sh './gradlew clean'
-        sh './gradlew --b build.gradle test --scan'
-        sh './gradlew --b build.gradle jacocoTestReport'
+        sh './gradlew --b ./build.gradle test'
       }
     }
 
@@ -58,9 +59,15 @@ pipeline {
         steps{
           echo '------------>Análisis de código estático<------------'
           withSonarQubeEnv('Sonar') {
-            sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner"
+          sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
         }
       }  
+    }
+
+    stage('Build') {
+      steps {
+        echo "------------>Build<------------"
+      }
     }
     
   }
