@@ -6,8 +6,8 @@ pipeline {
 
   //Opciones específicas de Pipeline dentro del Pipeline
   options {
-    	buildDiscarder(logRotator(numToKeepStr: '3'))
- 	disableConcurrentBuilds()
+    buildDiscarder(logRotator(numToKeepStr: '3'))
+ 	  disableConcurrentBuilds()
   }
 
   //Una sección que define las herramientas “preinstaladas” en Jenkins
@@ -18,6 +18,7 @@ pipeline {
 
   //Aquí comienzan los “items” del Pipeline
   stages{
+
     stage('Checkout') {
       steps{
         echo "------------>Checkout<------------"
@@ -30,34 +31,38 @@ pipeline {
           submoduleCfg: [], 
           userRemoteConfigs: [[
           credentialsId: 'GitHub_anvajaramillo', 
-          url:'https://github.com/anvajaramillo/InduccionADNCeiba'
+          url:'https://github.com/anvajaramillo/InduccionADNCeiba.git'
           ]]
         ])
-        sh 'gradle --b ./proyecto1/build.gradle clean compileJava'
-      }
-    }
-    
-    stage('Compile & Unit Tests') {
-      steps{
-        echo "------------>Unit Tests<------------"
-        sh 'gradle --b ./build.gradle test'
-      }
-    }
-
-    stage('Static Code Analysis') {
-      steps{
-        echo '------------>Análisis de código estático<------------'
-        withSonarQubeEnv('Sonar') {
-sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
-        }
       }
     }
 
     stage('Build') {
       steps {
         echo "------------>Build<------------"
+        sh 'chmod +x ./gradlew'
+        sh './gradlew build -x test'
       }
-    }  
+    }
+    
+    stage('Compile & Unit Tests') {
+      steps{
+        echo "------------>Unit Tests<------------"
+        sh './gradlew clean'
+        sh './gradlew --b build.gradle test --scan'
+        sh './gradlew --b build.gradle jacocoTestReport'
+      }
+    }
+
+    stage('Static Code Analysis') {
+        steps{
+          echo '------------>Análisis de código estático<------------'
+          withSonarQubeEnv('Sonar') {
+            sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner"
+        }
+      }  
+    }
+    
   }
 
   post {
