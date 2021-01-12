@@ -6,9 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class SistemaApuestasOnlineApplicationTests {
 	
-	@Test
-	void main () {
-		SistemaApuestasOnlineApplication.main( new String[] {});
-	}
+//	@Test
+//	void main () {
+//		SistemaApuestasOnlineApplication.main( new String[] {});
+//	}
 
 }

@@ -34,6 +34,7 @@ pipeline {
             url:'https://github.com/anvajaramillo/InduccionADNCeiba.git'
           ]]
         ])
+        sh 'gradle --b ./sistemaApuestasOnline/build.gradle clean'
         sh 'chmod +x ./gradlew'
         sh './gradlew --b ./build.gradle clean'
       }
@@ -67,6 +68,7 @@ pipeline {
     stage('Build') {
       steps {
         echo "------------>Build<------------"
+        sh 'gradle --b ./build.gradle build -x test'
       }
     }
     
