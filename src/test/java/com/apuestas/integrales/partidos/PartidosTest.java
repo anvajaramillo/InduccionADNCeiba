@@ -18,17 +18,17 @@ import entity.PartidoEntity;
 @SpringBootTest
 public class PartidosTest {
 	
-	@Autowired
-    private TestRestTemplate template;
-	
-	 private static String PARTIDOS_ENDPOINT = "http://localhost:8080/api/partidos";
-	 
-	 @Test
-	 void crearPartidos() throws ParseException {
-		 
+//	@Autowired
+//    private TestRestTemplate template;
+//	
+//	 private static String PARTIDOS_ENDPOINT = "http://localhost:8080/api/partidos";
+//	 
+//	 @Test
+//	 void crearPartidos() throws ParseException {
+//		 
 //		ResponseEntity<PartidoEntity> response = template.getForEntity(PARTIDOS_ENDPOINT, PartidoEntity.class);
 //		PartidoEntity partido = response.getBody();
-		 
+//		 
 //		String fechaYHora = "2021-01-12 17:00:00";
 //		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 //		Date horaInicio = format.parse(fechaYHora);  
@@ -40,8 +40,8 @@ public class PartidosTest {
 //	    requestHeaders.add("Content-type", "text/uri-list");
 //	    HttpEntity<String> httpEntity = new HttpEntity<>(PARTIDOS_ENDPOINT, requestHeaders);
 //	    template.exchange(PARTIDOS_ENDPOINT, HttpMethod.GET, httpEntity, String.class);
-		
-		
-	 }
+//		
+//		
+//	 }
 
 }
