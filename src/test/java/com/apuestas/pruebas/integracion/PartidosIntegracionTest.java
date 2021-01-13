@@ -14,33 +14,33 @@ import java.text.ParseException;
 
 public class PartidosIntegracionTest {
 	
-	private final String CONTEXT_PATH="/api/partidos";
-	
-	@BeforeEach
-	public void setUp() throws Exception {
-		RestAssured.baseURI="http://localhost";
-		RestAssured.port=8080;
-	}
-	
-	@Test
-	public void crearPartido() throws ParseException {
-		
-		PartidoEntity partido = anPartidoBuider().build();
-		Response response = given().
-				contentType("application/json").
-				accept("application/json").
-				body(partido).
-				when().
-				post(CONTEXT_PATH).
-				then().
-				statusCode(201).
-				contentType("application/json").
-				extract().
-				response();
-		
-		String partidoId = response.jsonPath().getString("id");
-		assertNotNull(partidoId);
-		
-	}
+//	private final String CONTEXT_PATH="/api/partidos";
+//	
+//	@BeforeEach
+//	public void setUp() throws Exception {
+//		RestAssured.baseURI="http://localhost";
+//		RestAssured.port=8080;
+//	}
+//	
+//	@Test
+//	public void crearPartido() throws ParseException {
+//		
+//		PartidoEntity partido = anPartidoBuider().build();
+//		Response response = given().
+//				contentType("application/json").
+//				accept("application/json").
+//				body(partido).
+//				when().
+//				post(CONTEXT_PATH).
+//				then().
+//				statusCode(201).
+//				contentType("application/json").
+//				extract().
+//				response();
+//		
+//		String partidoId = response.jsonPath().getString("id");
+//		assertNotNull(partidoId);
+//		
+//	}
 
 }
