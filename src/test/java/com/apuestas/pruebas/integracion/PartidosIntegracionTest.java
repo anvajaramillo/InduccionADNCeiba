@@ -12,7 +12,6 @@ import static com.apuestas.test.data.builder.PartidoBuider.anPartidoBuider;
 
 import java.text.ParseException;
 
-@SpringBootTest
 public class PartidosIntegracionTest {
 	
 	private final String CONTEXT_PATH="/api/partidos";
