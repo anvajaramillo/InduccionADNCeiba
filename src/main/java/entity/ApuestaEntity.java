@@ -41,9 +41,8 @@ public class ApuestaEntity  implements Serializable {
 	public ApuestaEntity() {
 		super();
 	}
-
-	public ApuestaEntity(Long id, int dinero, String nombre, String cedula, int puntajePais1, int puntajePais2,
-			PartidoEntity partidoEntity) {
+	
+	public ApuestaEntity(Long id, int dinero, String nombre, String cedula, int puntajePais1, int puntajePais2, boolean isGanador, int dineroGanado, PartidoEntity partido) {
 		super();
 		this.id = id;
 		this.dinero = dinero;
@@ -51,9 +50,11 @@ public class ApuestaEntity  implements Serializable {
 		this.cedula = cedula;
 		this.puntajePais1 = puntajePais1;
 		this.puntajePais2 = puntajePais2;
-		this.partido = partidoEntity;
+		this.isGanador = isGanador;
+		this.dineroGanado = dineroGanado;
+		this.partido = partido;
 	}
-	
+
 	public ApuestaEntity(ApuestaDTO apuestaDTO) {
 		this.id = apuestaDTO.getId();
 		this.dinero = apuestaDTO.getDinero();
