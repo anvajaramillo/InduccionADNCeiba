@@ -17,13 +17,13 @@ public class PartidosIntegracionTest {
 	private final String CONTEXT_PATH="/api/partidos";
 	
 	@BeforeEach
-	void setUp() throws Exception {
+	public void setUp() throws Exception {
 		RestAssured.baseURI="http://localhost";
 		RestAssured.port=8080;
 	}
 	
 	@Test
-	final void crearPartido() throws ParseException {
+	public void crearPartido() throws ParseException {
 		
 		PartidoEntity partido = anPartidoBuider().build();
 		Response response = given().
